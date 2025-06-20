@@ -3,7 +3,7 @@ import "./CartaTarot.css";
 
 const DORSO_IMG = "https://decartascoleccionables.com/wp-content/uploads/2021/01/dorso-carta-pokemon-725x1024.jpg";
 
-function CartaTarot({ nombre, imagen, reversed }) {
+function CartaTarot({ nombre, imagen, reversed, pinta }) {
   const [revelada, setRevelada] = useState(false);
   const handleClick = () => setRevelada(!revelada);
 
@@ -20,7 +20,7 @@ function CartaTarot({ nombre, imagen, reversed }) {
         />
         <img 
           src={imagen}
-          alt={nombre}
+          alt={nombre + " " + pinta + (reversed ? " invertida" : " al derecho")}
           className={`carta-tarot-img carta-tarot-img-back${reversed ? " reversed" : ""}`}
 
         />
