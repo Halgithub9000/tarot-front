@@ -1,0 +1,11 @@
+.centro-pantalla {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fila-cartas {
+  display: flex;
+  gap: 16px;
+}
