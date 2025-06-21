@@ -1,0 +1,33 @@
+.interpretacion-tarot-card {
+  background: linear-gradient(135deg, #f8fafc 60%, #e0c3fc 100%);
+  border-radius: 18px;
+  box-shadow: 0 4px 24px rgba(80, 40, 120, 0.12);
+  padding: 2rem 1.5rem;
+  max-width: 600px;
+  margin: 2rem auto;
+  font-family: 'Georgia', 'Times New Roman', serif;
+  color: #3d2956;
+  transition: box-shadow 0.2s;
+}
+
+.interpretacion-tarot-card:hover {
+  box-shadow: 0 8px 32px rgba(80, 40, 120, 0.18);
+}
+
+.interpretacion-tarot-header {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  margin-bottom: 1.2rem;
+}
+
+.interpretacion-tarot-icon {
+  font-size: 2rem;
+}
+
+.interpretacion-tarot-body p {
+  font-size: 1.15rem;
+  line-height: 1.7;
+  margin: 0;
+  text-align: justify;
+}

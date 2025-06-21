@@ -1,0 +1,25 @@
+.loading-bar-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(240, 240, 255, 0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.loading-bar-card {
+  width: 240px;
+  height: 340px;
+  animation: spin 1.2s linear infinite;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(80, 40, 120, 0.18);
+}
+
+@keyframes spin {
+  0% { transform: rotateY(0deg);}
+  100% { transform: rotateY(360deg);}
+}

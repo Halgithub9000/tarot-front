@@ -1,0 +1,73 @@
+.botones-superiores {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.boton-mesa {
+  padding: 16px 32px;
+  font-size: 1rem;
+  margin: 10px 10px 10px 10px;
+  background: linear-gradient(90deg, #e0c3fc 0%, #8ec5fc 100%);
+  color: #222;
+  border: black 2px solid;
+  border-radius: 24px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+  cursor: pointer;
+  transition: background 0.3s, transform 0.2s;
+  font-weight: 600;
+}
+
+.boton-mesa:hover {
+  background: linear-gradient(90deg, #8ec5fc 0%, #e0c3fc 100%);
+  transform: translateY(-2px) scale(1.04);
+}
+.selector-intencion {
+  position: relative;
+  overflow: hidden;
+  padding: 16px 32px;
+  font-size: 1.2rem;
+  background: linear-gradient(90deg, #e0c3fc 0%, #8ec5fc 100%);
+  color: #222;
+  border: black 2px solid;
+  border-radius: 24px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+  cursor: pointer;
+  appearance: none;
+  transition: background 0.3s, transform 0.2s;}
+
+.selector-intencion:focus {
+  box-shadow: 0 0 0 4px #e0c3fc88;
+  background: linear-gradient(90deg, #8ec5fc 0%, #e0c3fc 100%);
+  transform: scale(1.03);
+}
+
+.selector-intencion option {
+  background: #fafafa;
+  color: #333;
+  font-size: 1.1rem;
+}
+
+button:disabled {
+  background: #e0e0e0;
+  color: #726f6f;
+  cursor: not-allowed;
+  box-shadow: none;
+  opacity: 0.9;
+  border: none;
+  transform: none;
+}
+
+.fila-cartas {
+  display: flex;
+  gap: 32px;
+}
+
+@media (max-width: 700px) {
+  .fila-cartas {
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+  }
+}
