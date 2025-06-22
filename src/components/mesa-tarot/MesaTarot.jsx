@@ -24,6 +24,8 @@ function MesaTarot() {
   const [tiradaMostrada, setTiradaMostrada] = useState(false);
   const [interpretacion, setInterpretacion] = useState("");
   const [cartasTirada, setCartasTirada] = useState(null); // <--- variable global para la mesa
+  const [reveladas, setReveladas] = useState([]); // Nuevo estado
+
  
 
 
@@ -35,6 +37,8 @@ function MesaTarot() {
       setCartas(data.cards || []);
       setIntention(data.intention || "");
       setTiradaMostrada(true);
+      setReveladas(Array((data.cards || []).length).fill(false)); // Inicializa todas como no reveladas
+
     } catch {
       setLoading(true);
       alert("Error al obtener las cartas. Por favor, intenta de nuevo más tarde.");
@@ -42,8 +46,13 @@ function MesaTarot() {
     setLoading(false);
   };
 
-    const handleLecturaCompleta = async () => {
-      setLoading(true);
+    // Función para marcar una carta como revelada
+  const handleCartaRevelada = idx => {
+    setReveladas(prev => prev.map((r, i) => (i === idx ? true : r)));
+  };
+
+  const handleLecturaCompleta = async () => {
+    setLoading(true);
     try {
       const payload = cartasTirada;
       const res = await interpretInDetail(payload);
@@ -66,15 +75,17 @@ function MesaTarot() {
       setInterpretacion("Error al obtener interpretación superficial.");
     }
     setLoading(false);
-
   };
+
+  const todasReveladas = reveladas.length > 0 && reveladas.every(Boolean);
+
 
 if (loading) return <LoadingBar />;
   return (
     
     <div className="centro-pantalla">
 
-      {!tiradaMostrada ? (
+        {!tiradaMostrada ? (
         <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "24px" }}>
           <select
             className="selector-intencion"
@@ -91,17 +102,17 @@ if (loading) return <LoadingBar />;
             Obtener mi Tirada Diaria
           </button>
         </div>
-      ) : (
+        ) : (
 
         <div>
-      <div className="botones-superiores">
-        <button className="boton-mesa" onClick={handleLecturaCompleta}>
-          Lectura Completa
-        </button>
-        <button className="boton-mesa" onClick={handleLecturaRapida}>
-          Lectura Rápida
-        </button>
-      </div>
+          <div className="botones-superiores">
+            <button className="boton-mesa" onClick={handleLecturaCompleta} disabled={!todasReveladas}>
+            Lectura Completa
+            </button>
+            <button className="boton-mesa" onClick={handleLecturaRapida} disabled={!todasReveladas}>
+            Lectura Rápida
+            </button>
+          </div>
 
           <div className="fila-cartas" >
             {Array.isArray(cartas) && cartas.map((carta, idx) => (
@@ -110,6 +121,8 @@ if (loading) return <LoadingBar />;
                 nombre={carta.name}
                 imagen={"https://upload.wikimedia.org/wikipedia/commons/7/7f/RWS_Tarot_18_Moon.jpg"}
                 reversed={carta.is_reversed}
+                revelada={reveladas[idx]}
+                onRevelada={() => handleCartaRevelada(idx)}
               />
             ))}
           </div>

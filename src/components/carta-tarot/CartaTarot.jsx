@@ -3,13 +3,17 @@ import "./CartaTarot.css";
 
 const DORSO_IMG = "https://decartascoleccionables.com/wp-content/uploads/2021/01/dorso-carta-pokemon-725x1024.jpg";
 
-function CartaTarot({ nombre, imagen, reversed, pinta }) {
-  const [revelada, setRevelada] = useState(false);
-  const handleClick = () => setRevelada(!revelada);
-
+function CartaTarot({ nombre, imagen, reversed, pinta, revelada, onRevelada }) {
+  const [reveladaState, setRevelada] = useState(revelada);
+const handleClick = () => {
+  if (!reveladaState) {
+    setRevelada(true);
+    if (onRevelada) onRevelada();
+  }
+};
   return (
     <div 
-      className={`carta-tarot${revelada ? " revelada" : ""}`}
+      className={`carta-tarot${reveladaState ? " revelada" : ""}`}
       onClick={handleClick}
     >
       <div className="carta-tarot-inner">

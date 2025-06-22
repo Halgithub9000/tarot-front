@@ -1,11 +1,19 @@
 import React from "react";
 import "./LoadingBar.css";
-import imagenCargando from "../../assets/la-sacerdotisa.jpeg"; // Asegúrate de que la ruta sea correcta
+import CartaTarot from "../carta-tarot/CartaTarot";
+import imagenCargando from "../../assets/la-sacerdotisa.jpeg"; // o la imagen que prefieras
 
 function LoadingBar() {
   return (
     <div className="loading-bar-overlay">
-      <img src={imagenCargando} alt="Cargando..." className="loading-bar-card" />
+      <div className="loading-bar-carta-animada">
+        <CartaTarot
+          nombre="La Sacerdotisa"
+          imagen={imagenCargando}
+          reversed={false}
+          revelada={true}
+        />
+      </div>
     </div>
   );
 }
