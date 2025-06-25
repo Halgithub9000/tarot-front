@@ -2,7 +2,8 @@ import { TarotApiResponse } from "../types/tarot-api.types";
 
 export async function obtenerCartas(intention:string): Promise<TarotApiResponse> {
     const number_of_cards = 3; // Número de cartas a obtener
-    const response = await fetch(`http://localhost:8000/get-spread?num_cards=${number_of_cards}&intention${intention}`, {
+    const host = "http://localhost:8000"; // Cambia esto si es necesario
+    const response = await fetch(`${host}/get-spread?num_cards=${number_of_cards}&intention${intention}`, {
     headers: {
       accept: "application/json"
     }

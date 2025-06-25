@@ -14,6 +14,7 @@ const OPCIONES_INTENCION = [
   { value: "amor", label: "Amor" },
   { value: "trabajo", label: "Trabajo" },
   { value: "salud", label: "Salud" },
+  { value: "proyectos", label: "Nuevos Proyectos" },
   // Agrega más opciones si lo deseas
 ];
 
@@ -119,7 +120,7 @@ if (loading) return <LoadingBar />;
               <CartaTarot
                 key={idx}
                 nombre={carta.name}
-                imagen={"https://upload.wikimedia.org/wikipedia/commons/7/7f/RWS_Tarot_18_Moon.jpg"}
+                imagen={`http://localhost:8000${carta.image_url}`}
                 reversed={carta.is_reversed}
                 revelada={reveladas[idx]}
                 onRevelada={() => handleCartaRevelada(idx)}
