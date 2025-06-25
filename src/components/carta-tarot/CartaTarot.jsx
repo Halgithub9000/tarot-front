@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import "./CartaTarot.css";
+import dorso from "../../assets/dorso.jpg"; // Asegúrate de que la ruta sea correcta
 
-const DORSO_IMG = "https://decartascoleccionables.com/wp-content/uploads/2021/01/dorso-carta-pokemon-725x1024.jpg";
+const DORSO_IMG = dorso;
 
 function CartaTarot({ nombre, imagen, reversed, pinta, revelada, onRevelada }) {
   const [reveladaState, setRevelada] = useState(revelada);

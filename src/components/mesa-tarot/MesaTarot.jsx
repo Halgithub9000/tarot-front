@@ -33,7 +33,7 @@ function MesaTarot() {
   const handleTirada = async () => {
     setLoading(true);
     try {
-      const data = await obtenerCartas();
+      const data = await obtenerCartas(intention);
       setCartasTirada(data);
       setCartas(data.cards || []);
       setIntention(data.intention || "");
