@@ -120,7 +120,7 @@ if (loading) return <LoadingBar />;
               <CartaTarot
                 key={idx}
                 nombre={carta.name}
-                imagen={`http://localhost:8000${carta.image_url}`}
+                imagen={`https://tarot-api-4puc.onrender.com${carta.image_url}`}
                 reversed={carta.is_reversed}
                 revelada={reveladas[idx]}
                 onRevelada={() => handleCartaRevelada(idx)}

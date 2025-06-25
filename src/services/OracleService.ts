@@ -1,6 +1,6 @@
 import { OracleApiInput, OracleApiOutput } from "../types/oracle-api.types";
 
-const API_BASE = "http://localhost:8000"; // Cambia por tu base real
+const API_BASE = "https://tarot-api-4puc.onrender.com"; // Cambia por tu base real
 
 export async function interpretInDetail(
   tirada_cartas: OracleApiInput
