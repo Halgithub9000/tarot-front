@@ -4,12 +4,10 @@ import { interpretInDetail, interpretSuperficially } from "../../services/Oracle
 import CartaTarot from "../carta-tarot/CartaTarot";
 import ResultadoLectura from "../resultado-lectura/ResultadoLectura";
 import LoadingBar from "../loading-bar/LoadingBar";
-
+import SelectConCreacion from "../input-selector/InputSelector";
 import { obtenerCartas } from "../../services/tarotService";
 
-
 const OPCIONES_INTENCION = [
-  { value: "", label: "Manifiesta tu intención ...", selected: true },
   { value: "general", label: "General" },
   { value: "amor", label: "Amor" },
   { value: "trabajo", label: "Trabajo" },
@@ -26,20 +24,22 @@ function MesaTarot() {
   const [interpretacion, setInterpretacion] = useState("");
   const [cartasTirada, setCartasTirada] = useState(null); // <--- variable global para la mesa
   const [reveladas, setReveladas] = useState([]); // Nuevo estado
-
- 
-
+  const [pregunta, setPregunta] = useState(null);
 
   const handleTirada = async () => {
     setLoading(true);
     try {
-      const data = await obtenerCartas(intention);
+      // Extrae el valor de la pregunta (puede ser string o {value, label})
+      const preguntaValor =
+        pregunta && typeof pregunta === "object"
+          ? pregunta.value
+          : pregunta || "";
+      setIntention(preguntaValor);
+      const data = await obtenerCartas(preguntaValor);
       setCartasTirada(data);
       setCartas(data.cards || []);
-      setIntention(data.intention || "");
       setTiradaMostrada(true);
       setReveladas(Array((data.cards || []).length).fill(false)); // Inicializa todas como no reveladas
-
     } catch {
       setLoading(true);
       alert("Error al obtener las cartas. Por favor, intenta de nuevo más tarde.");
@@ -47,7 +47,7 @@ function MesaTarot() {
     setLoading(false);
   };
 
-    // Función para marcar una carta como revelada
+  // Función para marcar una carta como revelada
   const handleCartaRevelada = idx => {
     setReveladas(prev => prev.map((r, i) => (i === idx ? true : r)));
   };
@@ -62,7 +62,6 @@ function MesaTarot() {
       setInterpretacion("Error al obtener interpretación detallada.");
     }
     setLoading(false);
-
   };
 
   const handleLecturaRapida = async () => {
@@ -70,7 +69,6 @@ function MesaTarot() {
     try {
       const payload = cartasTirada;
       const res = await interpretSuperficially(payload);
-      setLoading(true);
       setInterpretacion(res.interpretation);
     } catch (e) {
       setInterpretacion("Error al obtener interpretación superficial.");
@@ -80,41 +78,32 @@ function MesaTarot() {
 
   const todasReveladas = reveladas.length > 0 && reveladas.every(Boolean);
 
-
-if (loading) return <LoadingBar />;
+  if (loading) return <LoadingBar />;
   return (
-    
     <div className="centro-pantalla">
-
-        {!tiradaMostrada ? (
+      {!tiradaMostrada ? (
         <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "24px" }}>
-          <select
-            className="selector-intencion"
-            value={intention}
-            onChange={e => setIntention(e.target.value)}
-          >
-            {OPCIONES_INTENCION.map(opcion => (
-              <option key={opcion.value} value={opcion.value}>
-                {opcion.label}
-              </option>
-            ))}
-          </select>
-          <button onClick={handleTirada} disabled={intention === ""}>
+        <SelectConCreacion
+            options={OPCIONES_INTENCION}
+            placeholder="Selecciona o escribe una pregunta"
+            value={pregunta}
+            onChange={setPregunta}
+            formatCreateLabel={input => `Preguntar: "${input}"`}
+        />
+          <button onClick={handleTirada} disabled={!pregunta || (typeof pregunta === "object" && !pregunta.value)}>
             Obtener mi Tirada Diaria
           </button>
         </div>
-        ) : (
-
+      ) : (
         <div>
           <div className="botones-superiores">
             <button className="boton-mesa" onClick={handleLecturaCompleta} disabled={!todasReveladas}>
-            Lectura Completa
+              Lectura Completa
             </button>
             <button className="boton-mesa" onClick={handleLecturaRapida} disabled={!todasReveladas}>
-            Lectura Rápida
+              Lectura Rápida
             </button>
           </div>
-
           <div className="fila-cartas" >
             {Array.isArray(cartas) && cartas.map((carta, idx) => (
               <CartaTarot
